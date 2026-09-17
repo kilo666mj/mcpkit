@@ -14,6 +14,16 @@ It standardizes the pieces that should be consistent across applications:
 Applications still own tool schemas, authentication, authorization, audit
 identity, confirmation and idempotency policy, and domain behavior.
 
+## Install and reference
+
+```sh
+go get github.com/kilo666mj/mcpkit@v0.1.0
+```
+
+Use the [mcpkit API](https://pkg.go.dev/github.com/kilo666mj/mcpkit) in servers
+and the [mcpkittest API](https://pkg.go.dev/github.com/kilo666mj/mcpkit/mcpkittest)
+for initialized in-memory client sessions.
+
 ## Server and tools
 
 ```go
@@ -88,8 +98,23 @@ result, err := session.CallTool(t.Context(), &mcp.CallToolParams{
 
 ## Compatibility
 
-`mcpkit` currently targets Go 1.26 and
-`github.com/modelcontextprotocol/go-sdk` v1.7.0.
+`mcpkit` requires Go 1.26 or newer, tests the minimum and current Go releases,
+and currently builds on `github.com/modelcontextprotocol/go-sdk` v1.7.0. Pin a
+tagged `mcpkit` release; do not assume its pre-v1 API is stable across minor
+versions.
+
+## Adoption checklist
+
+1. Pin a tagged release and construct one server per application identity.
+2. Classify every tool with `ReadOnly`, `Mutating`, or `Destructive`; treat the
+   annotation as a client hint, not enforcement.
+3. Keep input/output schemas, authorization, confirmations, idempotency, and
+   audit identity in the application.
+4. For HTTP, put authentication outside the MCP handler and retain the default
+   body, localhost, and browser-origin protections unless another reviewed
+   layer enforces the same boundary.
+5. Add black-box tool tests with `mcpkittest.Connect`, including denied and
+   invalid mutations.
 
 ## License
 
