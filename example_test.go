@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/kilo666mj/mcpkit"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
+	"go.michaelspost.com/mcpkit"
 )
 
 type listInput struct{}

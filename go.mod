@@ -1,4 +1,4 @@
-module github.com/kilo666mj/mcpkit
+module go.michaelspost.com/mcpkit
 
 go 1.26
 
